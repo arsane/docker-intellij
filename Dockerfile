@@ -27,40 +27,36 @@ RUN echo 'Creating user: developer' && \
     sudo chown root:root /usr/bin/sudo && \
     chmod 4755 /usr/bin/sudo
 
-RUN mkdir -p /home/developer/.IdeaIC2016.2/config/options && \
-    mkdir -p /home/developer/.IdeaIC2016.2/config/plugins
+RUN mkdir -p /home/developer/.IdeaIC2016.3/config/options && \
+    mkdir -p /home/developer/.IdeaIC2016.3/config/plugins
 
-ADD ./jdk.table.xml /home/developer/.IdeaIC2016.2/config/options/jdk.table.xml
+ADD ./jdk.table.xml /home/developer/.IdeaIC2016.3/config/options/jdk.table.xml
 ADD ./jdk.table.xml /home/developer/.jdk.table.xml
 
 ADD ./run /usr/local/bin/intellij
 
 RUN chmod +x /usr/local/bin/intellij && \
-    chown developer:developer -R /home/developer/.IdeaIC2016.2
+    chown developer:developer -R /home/developer/.IdeaIC2016.3
 
-RUN echo 'Downloading IntelliJ IDEA' && \
-    wget https://download.jetbrains.com/idea/ideaIC-2016.2.tar.gz -O /tmp/intellij.tar.gz -q && \
-    echo 'Installing IntelliJ IDEA' && \
-    mkdir -p /opt/intellij && \
+RUN INTELLIJ_VERSION=2016.3.5 && echo "Downloading IntelliJ IDEA $INTELLIJ_VERSION" && \
+    wget https://download.jetbrains.com/idea/ideaIC-$INTELLIJ_VERSION.tar.gz -O /tmp/intellij.tar.gz
+
+RUN echo 'Installing IntelliJ IDEA' && \
+     mkdir -p /opt/intellij && \
     tar -xf /tmp/intellij.tar.gz --strip-components=1 -C /opt/intellij && \
     rm /tmp/intellij.tar.gz
 
-RUN echo 'Downloading Go 1.6.3' && \
-    wget https://storage.googleapis.com/golang/go1.6.3.linux-amd64.tar.gz -O /tmp/go.tar.gz -q && \
-    echo 'Installing Go 1.6.3' && \
+RUN GO_VERSION=1.7.5 && echo "Downloading Go $GO_VERSION" && \
+    wget https://storage.googleapis.com/golang/go$GO_VERSION.linux-amd64.tar.gz -O /tmp/go.tar.gz -q && \
+    echo "Installing Go $GO_VERSION" && \
     sudo tar -zxf /tmp/go.tar.gz -C /usr/local/ && \
     rm -f /tmp/go.tar.gz
 
 RUN echo 'Installing Go plugin' && \
-    wget https://plugins.jetbrains.com/files/5047/27278/Go-0.12.1724.zip -O /home/developer/.IdeaIC2016.2/config/plugins/go.zip -q && \
-    cd /home/developer/.IdeaIC2016.2/config/plugins/ && \
+    wget https://plugins.jetbrains.com/files/5047/31145/Go-0.13.1924.zip -O /home/developer/.IdeaIC2016.3/config/plugins/go.zip -q && \
+    cd /home/developer/.IdeaIC2016.3/config/plugins/ && \
     unzip -q go.zip && \
     rm go.zip
-
-RUN echo 'Installing Markdown plugin' && \
-    wget https://plugins.jetbrains.com/files/7793/25156/markdown-2016.1.20160405.zip -O markdown.zip -q && \
-    unzip -q markdown.zip && \
-    rm markdown.zip
 
 RUN sudo chown developer:developer -R /home/developer
 

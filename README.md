@@ -5,9 +5,8 @@
 The image contains the following software:
 
 - [IntelliJ IDEA Community 2016.2](https://www.jetbrains.com/idea/)
-- [Go 1.6.3](https://golang.org/)
+- [Go 1.7.5](https://golang.org/)
 - [Go plugin (nightly, 0.12.1724)](https://plugins.jetbrains.com/plugin/5047)
-- [Markdown plugin (release, 2016.1.20160405)](https://plugins.jetbrains.com/plugin/7793)
 
 ## Running
 
